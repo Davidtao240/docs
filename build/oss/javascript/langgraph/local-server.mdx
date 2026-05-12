@@ -3,9 +3,7 @@ title: Run a local server
 sidebarTitle: Local server
 ---
 
-import AlphaCallout from '/snippets/alpha-lg-callout.mdx';
 
-<AlphaCallout />
 
 This guide shows you how to run a LangGraph application locally.
 
@@ -20,11 +18,11 @@ Before you begin, ensure you have the following:
 
 
 ```shell
-npx @langchain/langgraph-cli
+npm install --save-dev @langchain/langgraph-cli
 ```
 
 
-## 2. Create a LangGraph app 🌱
+## 2. Create a LangGraph app
 
 
 
@@ -33,6 +31,33 @@ Create a new app from the [`new-langgraph-project-js` template](https://github.c
 ```shell
 npm create langgraph
 ```
+
+<Accordion title="Adding LangGraph to an existing project">
+If you have an existing project with LangGraph agents, you can automatically generate a `langgraph.json` configuration file using the `config` command:
+
+```shell
+npm create langgraph config
+```
+
+This command scans your project for LangGraph agents (such as `createAgent()`, `StateGraph.compile()`, or `workflow.compile()` patterns) and generates a configuration file with all exported agents.
+
+Example output:
+
+```json
+{
+  "node_version": "24",
+  "graphs": {
+    "agent": "./src/agent.ts:agent",
+    "searchAgent": "./src/search.ts:searchAgent"
+  },
+  "env": ".env"
+}
+```
+
+<Tip>
+Only **exported** agents are included in the configuration. If an agent is not exported, the command will warn you so you can add the `export` keyword.
+</Tip>
+</Accordion>
 
 
 ## 3. Install dependencies
@@ -55,7 +80,7 @@ You will find a `.env.example` in the root of your new LangGraph app. Create a `
 LANGSMITH_API_KEY=lsv2...
 ```
 
-## 5. Launch LangGraph Server 🚀
+## 5. Launch Agent server
 
 Start the LangGraph API server locally:
 
@@ -69,33 +94,44 @@ npx @langchain/langgraph-cli dev
 Sample output:
 
 ```
->    Ready!
->
->    - API: [http://localhost:2024](http://localhost:2024/)
->
->    - Docs: http://localhost:2024/docs
->
+INFO:langgraph_api.cli:
+
+        Welcome to
+
+╦  ┌─┐┌┐┌┌─┐╔═╗┬─┐┌─┐┌─┐┬ ┬
+║  ├─┤││││ ┬║ ╦├┬┘├─┤├─┘├─┤
+╩═╝┴ ┴┘└┘└─┘╚═╝┴└─┴ ┴┴  ┴ ┴
+
+- 🚀 API: http://127.0.0.1:2024
+- 🎨 Studio UI: https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024
+- 📚 API Docs: http://127.0.0.1:2024/docs
+
+This in-memory server is designed for development and testing.
+For production use, please use LangSmith Deployment.
+```
+
+The `langgraph dev` command starts Agent Server in an in-memory mode. This mode is suitable for development and testing purposes. For production use, deploy Agent Server with access to a persistent storage backend. For more information, see the [Platform setup overview](/langsmith/platform-setup).
+
+## 6. Test your application in Studio
+
+[Studio](/langsmith/studio) is a specialized UI that you can connect to LangGraph API server to visualize, interact with, and debug your application locally. Test your graph in Studio by visiting the URL provided in the output of the `langgraph dev` command:
+
+```
 >    - LangGraph Studio Web UI: https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024
 ```
 
-The `langgraph dev` command starts LangGraph Server in an in-memory mode. This mode is suitable for development and testing purposes. For production use, deploy LangGraph Server with access to a persistent storage backend. For more information, see [Deployment options](/langgraph-platform/deployment-options).
-
-## 6. Test your application in LangGraph Studio
-
-[LangGraph Studio](/langgraph-platform/langgraph-studio) is a specialized UI that you can connect to LangGraph API server to visualize, interact with, and debug your application locally. Test your graph in LangGraph Studio by visiting the URL provided in the output of the `langgraph dev` command:
+For an Agent Server running on a custom host/port, update the `baseUrl` query parameter in the URL. For example, if your server is running on `http://myhost:3000`:
 
 ```
->    - LangGraph Studio Web UI: https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024
+https://smith.langchain.com/studio/?baseUrl=http://myhost:3000
 ```
-
-For a LangGraph Server running on a custom host/port, update the baseURL parameter.
 
 <Accordion title="Safari compatibility">
-  Use the `--tunnel` flag with your command to create a secure tunnel, as Safari has limitations when connecting to localhost servers:
+    Use the `--tunnel` flag with your command to create a secure tunnel, as Safari has limitations when connecting to localhost servers:
 
-  ```shell
-  langgraph dev --tunnel
-  ```
+    ```shell
+    langgraph dev --tunnel
+    ```
 </Accordion>
 
 ## 7. Test the API
@@ -105,33 +141,33 @@ For a LangGraph Server running on a custom host/port, update the baseURL paramet
 <Tabs>
     <Tab title="Javascript SDK">
     1. Install the LangGraph JS SDK:
-      ```shell
-      npm install @langchain/langgraph-sdk
-      ```
+        ```shell
+        npm install @langchain/langgraph-sdk
+        ```
     2. Send a message to the assistant (threadless run):
       ```js
-      const { Client } = await import("@langchain/langgraph-sdk");
+      import { Client } from "@langchain/langgraph-sdk";
 
       // only set the apiUrl if you changed the default port when calling langgraph dev
       const client = new Client({ apiUrl: "http://localhost:2024"});
 
       const streamResponse = client.runs.stream(
-          null, // Threadless run
-          "agent", // Assistant ID
-          {
-              input: {
-                  "messages": [
-                      { "role": "user", "content": "What is LangGraph?"}
-                  ]
-              },
-              streamMode: "messages-tuple",
-          }
+        null, // Threadless run
+        "agent", // Assistant ID
+        {
+          input: {
+            "messages": [
+              { "role": "user", "content": "What is LangGraph?"}
+            ]
+          },
+          streamMode: "messages-tuple",
+        }
       );
 
       for await (const chunk of streamResponse) {
-          console.log(`Receiving new event of type: ${chunk.event}...`);
-          console.log(JSON.stringify(chunk.data));
-          console.log("\n\n");
+        console.log(`Receiving new event of type: ${chunk.event}...`);
+        console.log(JSON.stringify(chunk.data));
+        console.log("\n\n");
       }
       ```
     </Tab>
@@ -161,15 +197,19 @@ For a LangGraph Server running on a custom host/port, update the baseURL paramet
 
 Now that you have a LangGraph app running locally, take your journey further by exploring deployment and advanced features:
 
-* [Deployment quickstart](/langgraph-platform/deployment-quickstart): Deploy your LangGraph app using LangGraph Platform.
-* [LangGraph Platform](/langgraph-platform): Learn about foundational LangGraph Platform concepts.
+* [Deployment quickstart](/langsmith/deployment-quickstart): Deploy your LangGraph app using LangSmith.
+* [LangSmith](/langsmith/home): Learn about foundational LangSmith concepts.
 
 
-
-* [JS/TS SDK Reference](https://reference.langchain.com/javascript/modules/_langchain_langgraph-sdk.html): Explore the JS/TS SDK API Reference.
+* [SDK Reference](https://reference.langchain.com/javascript/modules/_langchain_langgraph-sdk.html): Explore the SDK API Reference.
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/local-server.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/local-server.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>

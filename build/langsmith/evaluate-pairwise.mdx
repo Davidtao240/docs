@@ -89,13 +89,13 @@ In the Python example below, we are pulling [this structured prompt](https://smi
 <CodeGroup>
 
 ```python Python
-from langchain import hub
+from langchain_classic import hub
 from langchain.chat_models import init_chat_model
 from langsmith import evaluate
 
 # See the prompt: https://smith.langchain.com/hub/langchain-ai/pairwise-evaluation-2
 prompt = hub.pull("langchain-ai/pairwise-evaluation-2")
-model = init_chat_model("gpt-4o")
+model = init_chat_model("gpt-5.4")
 chain = prompt | model
 
 def ranked_preference(inputs: dict, outputs: list[dict]) -> list:
@@ -243,6 +243,11 @@ You may filter to runs where the first experiment was better or vice versa by cl
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/evaluate-pairwise.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/evaluate-pairwise.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>

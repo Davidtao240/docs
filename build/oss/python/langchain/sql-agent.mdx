@@ -49,7 +49,8 @@ We will cover the following concepts:
 
 
 ### LangSmith
-Set up [LangSmith](https://smith.langchain.com) to inspect what is happening inside your chain or agent. Then set the following environment variables:
+
+Set up [LangSmith](https://smith.langchain.com?utm_source=docs&utm_medium=cta&utm_campaign=langsmith-signup&utm_content=oss-langchain-sql-agent) to inspect what is happening inside your chain or agent. Then set the following environment variables:
 
     ```shell
     export LANGSMITH_TRACING="true"
@@ -58,7 +59,7 @@ Set up [LangSmith](https://smith.langchain.com) to inspect what is happening ins
 
 ## 1. Select an LLM
 
-Select a model that supports [tool-calling](/oss/python/integrations/providers):
+Select a model that supports [tool-calling](/oss/python/integrations/providers/overview):
 
 <ChatModelTabsPy />
 
@@ -114,7 +115,7 @@ Use the `SQLDatabase` wrapper available in the `langchain_community` package to 
 ```python
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
 
-toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+toolkit = SQLDatabaseToolkit(db=db, llm=model)
 
 tools = toolkit.get_tools()
 
@@ -133,9 +134,9 @@ sql_db_query_checker: Use this tool to double check if your query is correct bef
 
 
 
-## 5. Use `create_agent`
+## 4. Use `create_agent`
 
-Use `create_agent` to build a [ReAct agent](https://arxiv.org/pdf/2210.03629) with minimal code. The agent will interpret the request and generate a SQL command, which the tools will execute. If the command has an error, the error message is returned to the model. The model can then examine the original request and the new error message and generate a new command. This can continue until the LLM generates the command successfully or reaches an end count. This pattern of providing a model with feedback - error messages in this case - is very powerful.
+Use [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent) to build a [ReAct agent](https://arxiv.org/pdf/2210.03629) with minimal code. The agent will interpret the request and generate a SQL command, which the tools will execute. If the command has an error, the error message is returned to the model. The model can then examine the original request and the new error message and generate a new command. This can continue until the LLM generates the command successfully or reaches an end count. This pattern of providing a model with feedback - error messages in this case - is very powerful.
 
 Initialize the agent with a descriptive system prompt to customize its behavior:
 
@@ -172,14 +173,15 @@ Now, create an agent with the model, tools, and prompt:
 ```python
 from langchain.agents import create_agent
 
+
 agent = create_agent(
-    llm,
+    model,
     tools,
     system_prompt=system_prompt,
 )
 ```
 
-## 6. Run the agent
+## 5. Run the agent
 
 Run the agent on a sample query and observe its behavior:
 
@@ -287,7 +289,7 @@ The agent correctly wrote a query, checked the query, and ran it to inform its f
 
 ### (Optional) Use Studio
 
-[Studio](/langgraph-platform/langgraph-studio) provides a "client side" loop as well as memory so you can run this as a chat interface and query the database. You can ask questions like "Tell me the scheme of the database" or "Show me the invoices for the 5 top customers". You will see the SQL command that is generated and the resulting output. The details of how to get that started are below.
+[Studio](/langsmith/studio) provides a "client side" loop as well as memory so you can run this as a chat interface and query the database. You can ask questions like "Tell me the scheme of the database" or "Show me the invoices for the 5 top customers". You will see the SQL command that is generated and the resulting output. The details of how to get that started are below.
 <Accordion title="Run your agent in Studio">
 
 In addition to the previously mentioned packages, you will need to:
@@ -322,8 +324,8 @@ from langchain_community.utilities import SQLDatabase
 import requests
 
 
-# initialize an LLM
-llm = init_chat_model("openai:gpt-4.1")
+# Initialize an LLM
+model = init_chat_model("gpt-5.4")
 
 # Get the database, store it locally
 url = "https://storage.googleapis.com/benchmarks-artifacts/chinook/Chinook.db"
@@ -342,7 +344,7 @@ else:
 db = SQLDatabase.from_uri("sqlite:///Chinook.db")
 
 # Create the tools
-toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+toolkit = SQLDatabaseToolkit(db=db, llm=model)
 
 tools = toolkit.get_tools()
 
@@ -377,7 +379,7 @@ Then you should query the schema of the most relevant tables.
 )
 
 agent = create_agent(
-    llm,
+    model,
     tools,
     system_prompt=system_prompt,
 )
@@ -397,8 +399,9 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import HumanInTheLoopMiddleware # [!code highlight]
 from langgraph.checkpoint.memory import InMemorySaver # [!code highlight]
 
+
 agent = create_agent(
-    llm,
+    model,
     tools,
     system_prompt=system_prompt,
     middleware=[ # [!code highlight]
@@ -424,13 +427,13 @@ for step in agent.stream(
     config, # [!code highlight]
     stream_mode="values",
 ):
-    if "messages" in step:
-        step["messages"][-1].pretty_print()
-    elif "__interrupt__" in step: # [!code highlight]
+    if "__interrupt__" in step: # [!code highlight]
         print("INTERRUPTED:") # [!code highlight]
         interrupt = step["__interrupt__"][0] # [!code highlight]
-        for request in interrupt.value: # [!code highlight]
+        for request in interrupt.value["action_requests"]: # [!code highlight]
             print(request["description"]) # [!code highlight]
+    elif "messages" in step:
+        step["messages"][-1].pretty_print()
     else:
         pass
 ```
@@ -448,16 +451,16 @@ We can resume execution, in this case accepting the query, using [Command](/oss/
 from langgraph.types import Command # [!code highlight]
 
 for step in agent.stream(
-    Command(resume=[{"type": "accept"}]), # [!code highlight]
+    Command(resume={"decisions": [{"type": "approve"}]}), # [!code highlight]
     config,
     stream_mode="values",
 ):
     if "messages" in step:
         step["messages"][-1].pretty_print()
-    elif "__interrupt__" in step:
+    if "__interrupt__" in step:
         print("INTERRUPTED:")
         interrupt = step["__interrupt__"][0]
-        for request in interrupt.value:
+        for request in interrupt.value["action_requests"]:
             print(request["description"])
     else:
         pass
@@ -482,12 +485,19 @@ Refer to the [human-in-the-loop guide](/oss/python/langchain/human-in-the-loop) 
 
 
 
+
+
 ## Next steps
 
 For deeper customization, check out [this tutorial](/oss/python/langgraph/sql-agent) for implementing a SQL agent directly using LangGraph primitives.
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/sql-agent.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/sql-agent.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>

@@ -1,8 +1,9 @@
 ---
-title: Zotero
+title: "Zotero integration"
+description: "Integrate with the Zotero retriever using LangChain Python."
 ---
 
-This will help you get started with the Zotero [retriever](/oss/python/langchain/retrieval). For detailed documentation of all ZoteroRetriever features and configurations head to the [Github page](https://github.com/TimBMK/langchain-zotero-retriever).
+This will help you get started with the Zotero [retriever](/oss/python/langchain/retrieval). For detailed documentation of all `ZoteroRetriever` features and configurations head to the [GitHub page](https://github.com/TimBMK/langchain-zotero-retriever).
 
 ### Integration details
 
@@ -12,11 +13,11 @@ This will help you get started with the Zotero [retriever](/oss/python/langchain
 
 ## Setup
 
-If you want to get automated tracing from individual queries, you can also set your [LangSmith](https://docs.smith.langchain.com/) API key by uncommenting below:
+If you want to get automated tracing from individual queries, you can also set your [LangSmith](/langsmith/home) API key by uncommenting below:
 
 ```python
-# os.environ["LANGSMITH_API_KEY"] = getpass.getpass("Enter your LangSmith API key: ")
-# os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_API_KEY"] = getpass.getpass("Enter your LangSmith API key: ")
+os.environ["LANGSMITH_TRACING"] = "true"
 ```
 
 ### Installation
@@ -24,7 +25,7 @@ If you want to get automated tracing from individual queries, you can also set y
 This retriever lives in the `langchain-zotero-retriever` package. We also require the `pyzotero` dependency:
 
 ```python
-%pip install -qU langchain-zotero-retriever pyzotero
+pip install -qU langchain-zotero-retriever pyzotero
 ```
 
 ## Instantiation
@@ -127,7 +128,7 @@ retriever_tool = StructuredTool.from_function(
 )
 
 
-llm = ChatOpenAI(model="gpt-4o-mini-2024-07-18")
+llm = ChatOpenAI(model="gpt-5.4-mini")
 
 llm_with_tools = llm.bind_tools([retrieve])
 
@@ -138,14 +139,21 @@ chain = llm_with_tools | PydanticToolsParser(tools=[retrieve])
 chain.invoke(q)
 ```
 
+---
+
 ## API reference
 
-For detailed documentation of all ZoteroRetriever features and configurations head to the [Github page](https://github.com/TimBMK/langchain-zotero-retriever).
+For detailed documentation of all `ZoteroRetriever` features and configurations head to the [GitHub page](https://github.com/TimBMK/langchain-zotero-retriever).
 
 For detailed documentation on the Zotero API, head to the [Zotero API reference](https://www.zotero.org/support/dev/web_api/v3/start).
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/retrievers/zotero.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/retrievers/zotero.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>

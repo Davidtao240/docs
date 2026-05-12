@@ -1,8 +1,9 @@
 ---
-title: Snowflake Cortex
+title: "Snowflake cortex integration"
+description: "Integrate with the Snowflake cortex chat model using LangChain Python."
 ---
 
-[Snowflake Cortex](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions) gives you instant access to industry-leading large language models (LLMs) trained by researchers at companies like Mistral, Reka, Meta, and Google, including [Snowflake Arctic](https://www.snowflake.com/en/data-cloud/arctic/), an open enterprise-grade model developed by Snowflake.
+[Snowflake Cortex](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions) gives you instant access to industry-leading Large Language Models (LLMs) trained by researchers at companies like Mistral, Reka, Meta, and Google, including [Snowflake Arctic](https://www.snowflake.com/en/data-cloud/arctic/), an open enterprise-grade model developed by Snowflake.
 
 This example goes over how to use LangChain to interact with Snowflake Cortex.
 
@@ -11,7 +12,7 @@ This example goes over how to use LangChain to interact with Snowflake Cortex.
 We start by installing the `snowflake-snowpark-python` library, using the command below. Then we configure the credentials for connecting to Snowflake, as environment variables or pass them directly.
 
 ```python
-%pip install -qU snowflake-snowpark-python
+pip install -qU snowflake-snowpark-python
 ```
 
 ```python
@@ -102,6 +103,11 @@ for chunk in chat._stream(messages):
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/chat/snowflake.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/chat/snowflake.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>

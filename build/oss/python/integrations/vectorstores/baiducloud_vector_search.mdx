@@ -1,5 +1,6 @@
 ---
-title: Baidu Cloud ElasticSearch VectorSearch
+title: "Baidu cloud elasticsearch vectorsearch integration"
+description: "Integrate with the Baidu cloud elasticsearch vectorsearch vector store using LangChain Python."
 ---
 
 >[Baidu Cloud VectorSearch](https://cloud.baidu.com/doc/BES/index.html?from=productToDoc) is a fully managed, enterprise-level distributed search and analysis service which is 100% compatible to open source. Baidu Cloud VectorSearch provides low-cost, high-performance, and reliable retrieval and analysis platform level product services for structured/unstructured data. As a vector database , it supports multiple index types and similarity distance methods.
@@ -16,7 +17,7 @@ After the instance is up and running, follow these steps to split documents, get
 We need to install the following Python packages first.
 
 ```python
-%pip install -qU langchain-community elasticsearch == 7.11.0
+pip install -qU langchain-community elasticsearch == 7.11.0
 ```
 
 First, we want to use `QianfanEmbeddings` so we have to get the Qianfan AK and SK. Details for QianFan is related to [Baidu Qianfan Workshop](https://cloud.baidu.com/product/wenxinworkshop)
@@ -74,6 +75,11 @@ Please feel free to contact [liuboyao@baidu.com](mailto:liuboyao@baidu.com) or [
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/vectorstores/baiducloud_vector_search.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/vectorstores/baiducloud_vector_search.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>

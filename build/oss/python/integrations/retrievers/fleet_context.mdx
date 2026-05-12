@@ -1,5 +1,6 @@
 ---
-title: Fleet AI Context
+title: "Fleet AI context integration"
+description: "Integrate with the Fleet AI context retriever using LangChain Python."
 ---
 
 >[Fleet AI Context](https://www.fleet.so/context) is a dataset of high-quality embeddings of the top 1200 most popular & permissive Python Libraries & their documentation.
@@ -9,7 +10,7 @@ title: Fleet AI Context
 Let's take a look at how we can use these embeddings to power a docs retrieval system and ultimately a simple code-generating chain!
 
 ```python
-%pip install -qU  langchain fleet-context langchain-openai pandas faiss-cpu # faiss-gpu for CUDA supported GPU
+pip install -qU  langchain fleet-context langchain-openai pandas faiss-cpu # faiss-gpu for CUDA supported GPU
 ```
 
 ```python
@@ -17,7 +18,7 @@ from operator import itemgetter
 from typing import Any, Optional, Type
 
 import pandas as pd
-from langchain.retrievers import MultiVectorRetriever
+from langchain_classic.retrievers import MultiVectorRetriever
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain_core.stores import BaseStore
@@ -172,6 +173,11 @@ for chunk in chain.invoke(
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/retrievers/fleet_context.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/retrievers/fleet_context.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>

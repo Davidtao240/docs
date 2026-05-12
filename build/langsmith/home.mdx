@@ -1,73 +1,146 @@
 ---
-title: Get started with LangSmith
+title: LangSmith docs
 sidebarTitle: Overview
 mode: wide
 ---
 
-[LangSmith](https://www.langchain.com/langsmith) is a platform for building production-grade LLM applications. Monitor and evaluate your application, so you can ship quickly and with confidence.
+**LangSmith is a framework-agnostic platform for building, debugging, and deploying AI agents and LLM applications.** Trace requests, evaluate outputs, test prompts, and manage deployments all in one place, with your agent stack.
 
-<Tip>
-LangSmith is framework agnostic — you can use it with or without LangChain's open source frameworks [`langchain`](https://python.langchain.com) and [`langgraph`](https://langchain-ai.github.io/langgraph/).
-</Tip>
+## Get started
 
-<div style={{ textAlign: 'center' }}>
+<Steps>
+    <Step title="Create an account" icon="user-plus">
+        Sign up at [smith.langchain.com](https://smith.langchain.com?utm_source=docs&utm_medium=cta&utm_campaign=langsmith-signup&utm_content=langsmith-home) (no credit card required).
+        You can log in with **Google**, **GitHub**, or **email**.
+    </Step>
+    <Step title="Create an API key" icon="key">
+        Go to your [Settings page](https://smith.langchain.com/settings) → **API Keys** → **Create API Key**.
+        Copy the key and save it securely.
+    </Step>
+    <Step title="Choose your integration" icon="plug">
+        LangSmith works with many frameworks and providers. Browse [available integrations](/langsmith/integrations) to connect your stack.
+    </Step>
+</Steps>
+
+Once your account and API key are ready, choose a quickstart to begin building with LangSmith:
+
+<Columns cols={3}>
+    <Card
+        title="Observability"
+        icon="/images/brand/observability-icon-dark.png"
+        href="/langsmith/observability-quickstart"
+        arrow="true"
+        cta="Start tracing"
+    >
+        Gain visibility into every step your application takes to debug faster and improve reliability.
+    </Card>
+
+    <Card
+        title="Evaluation"
+        icon="/images/brand/evaluation-icon-dark.png"
+        href="/langsmith/evaluation-quickstart"
+        arrow="true"
+        cta="Evaluate your app"
+    >
+        Measure and track quality over time to ensure your AI applications are consistent and trustworthy.
+    </Card>
+
+    <Card
+        title="Deployment"
+        icon="/images/brand/deployment-icon-dark.png"
+        href="/langsmith/deployment"
+        arrow="true"
+        cta="Deploy your agents"
+        >
+        Deploy your agents as Agent Servers, ready to scale in production.
+    </Card>
+</Columns>
+
+## More ways to build
+
+<Columns cols={4}>
+    <Card
+        title="Fleet"
+        icon="/images/brand/fleet-icon-dark.png"
+        href="/langsmith/fleet/index"
+        arrow="true"
+        cta="Build an agent"
+    >
+        Design and deploy AI agents visually without writing code.
+    </Card>
+
+    <Card
+        title="Prompt engineering"
+        icon="/images/brand/prompt-engineering-icon.png"
+        href="/langsmith/prompt-engineering-quickstart"
+        arrow="true"
+        cta="Test your prompts"
+    >
+        Iterate on prompts with built-in versioning and collaboration to ship improvements faster.
+    </Card>
+
+    <Card
+        title="LangSmith CLI"
+        icon="terminal-2"
+        href="/langsmith/langsmith-cli"
+        arrow="true"
+        cta="Use the CLI"
+    >
+        Query and manage traces, datasets, experiments, and more from the terminal.
+    </Card>
+
+    <Card
+        title="Studio"
+        icon="window"
+        href="/langsmith/quick-start-studio"
+        arrow="true"
+        cta="Develop with Studio"
+    >
+        Use a visual interface to design, test, and refine applications end-to-end.
+    </Card>
+</Columns>
+
+## Infrastructure
+
+<Columns cols={2}>
+    <Card
+        title="Platform setup"
+        href="/langsmith/platform-setup"
+        icon="server-2"
+        arrow="true"
+        cta="Choose how to set up LangSmith"
+    >
+        Use LangSmith in managed cloud, in a self-hosted environment, or hybrid to match your infrastructure and compliance needs.
+    </Card>
+
+    <Card icon="shield-lock" title="Security & compliance" href="https://trust.langchain.com/" arrow="true" cta="Visit Trust Center">
+        LangSmith meets the highest standards of data security and privacy with HIPAA, SOC 2 Type 2, and GDPR compliance. [Meet with our team](https://www.langchain.com/contact-sales) to learn more or visit our [Trust Center](https://trust.langchain.com/).
+    </Card>
+</Columns>
+
+## Workflow
+
+LangSmith combines observability, evaluation, deployment, and platform setup in one integrated workflow—from local development to production.
+
 <img
     className="block dark:hidden"
-    src="/langsmith/images/overview-light.svg"
-    alt="Light mode overview"
+    src="/langsmith/images/overview-light.png"
+    alt="Diagram showing how LangSmith integrates observability, evaluation, deployment, and platform setup in a single workflow from development to production."
 />
 
 <img
     className="hidden dark:block"
-    src="/langsmith/images/overview-dark.svg"
-    alt="Dark mode overview"
+    src="/langsmith/images/overview-dark.png"
+    alt="Diagram showing how LangSmith integrates observability, evaluation, deployment, and platform setup in a single workflow from development to production."
 />
-</div>
-
-<Columns cols={2}>
-    <Card
-    title="Start tracing"
-    icon="magnifying-glass"
-    href="/langsmith/observability-quickstart"
-    arrow="true"
-    cta="Learn more"
->
-   Gain visibility into each step your application takes when handling a request to debug faster.
-    </Card>
-
-    <Card
-    title="Evaluate your application"
-    icon="chart-simple"
-    href="/langsmith/evaluation-quickstart"
-    arrow="true"
-    cta="Learn more"
->
-   Measure quality of your applications over time to build more reliable AI applications.
-    </Card>
-
-    <Card
-    title="Test your prompts"
-    icon="pencil"
-    href="/langsmith/prompt-engineering-quickstart"
-    arrow="true"
-    cta="Learn more"
->
-Iterate on prompts, with automatic version control and collaboration features.
-    </Card>
-
-    <Card
-    title="Set up your workspace"
-    icon="user-tie"
-    href="/langsmith/administration-overview"
-    arrow="true"
-    cta="Learn more"
->
-Set up your workspace, configure admin settings, and invite your team to collaborate.
-    </Card>
-</Columns>
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/home.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/home.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>

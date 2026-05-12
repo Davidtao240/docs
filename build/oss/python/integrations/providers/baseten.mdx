@@ -1,47 +1,39 @@
 ---
-title: Baseten
+title: "Baseten integrations"
+sidebarTitle: "Baseten"
+description: "Integrate with Baseten using LangChain Python."
 ---
 
->[Baseten](https://baseten.co) is a provider of all the infrastructure you need to deploy and serve
-> ML models performantly, scalably, and cost-efficiently.
+This page covers all LangChain integrations with [Baseten](https://baseten.co).
 
->As a model inference platform, `Baseten` is a `Provider` in the LangChain ecosystem.
-The `Baseten` integration currently implements a single `Component`, LLMs, but more are planned!
+Baseten provides infrastructure for deploying and serving ML models. Access open source models via [model APIs](https://docs.baseten.co/development/model-apis/overview#supported-models) or run proprietary and fine-tuned models on dedicated GPUs through dedicated deployments.
 
->`Baseten` lets you run both open source models like Llama 2 or Mistral and run proprietary or
-fine-tuned models on dedicated GPUs. If you're used to a provider like OpenAI, using Baseten has a few differences:
+## Model interfaces
 
->* Rather than paying per token, you pay per minute of GPU used.
->* Every model on Baseten uses [Truss](https://truss.baseten.co/welcome), our open-source model packaging framework, for maximum customizability.
->* While we have some [OpenAI ChatCompletions-compatible models](https://docs.baseten.co/api-reference/openai), you can define your own I/O spec with `Truss`.
+<Columns cols={2}>
+    <Card title="ChatBaseten" href="/oss/python/integrations/chat/baseten" cta="Get started" icon="message" arrow>
+        Baseten chat models.
+    </Card>
+    <Card title="BasetenEmbeddings" href="/oss/python/integrations/embeddings/baseten" cta="Get started" icon="stack-2" arrow>
+        Baseten embedding models.
+    </Card>
+</Columns>
 
->[Learn more](https://docs.baseten.co/deploy/lifecycle) about model IDs and deployments.
+## Other
 
->Learn more about Baseten in [the Baseten docs](https://docs.baseten.co/).
-
-## Installation and Setup
-
-You'll need two things to use Baseten models with LangChain:
-
-* A [Baseten account](https://baseten.co)
-* An [API key](https://docs.baseten.co/observability/api-keys)
-
-Export your API key to your as an environment variable called `BASETEN_API_KEY`.
-
-```sh
-export BASETEN_API_KEY="paste_your_api_key_here"
-```
-
-## LLMs
-
-See a [usage example](/oss/python/integrations/llms/baseten).
-
-```python
-from langchain_community.llms import Baseten
-```
+<Columns cols={2}>
+    <Card title="Baseten" href="/oss/python/integrations/llms/baseten" cta="Get started" icon="cursor-text" arrow>
+        (Legacy) Baseten text completion models.
+    </Card>
+</Columns>
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/baseten.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/baseten.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>

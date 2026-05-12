@@ -1,5 +1,6 @@
 ---
-title: ScraperAPI
+title: "ScraperAPI integration"
+description: "Integrate with the ScraperAPI tool using LangChain Python."
 ---
 
 Give your AI agent the ability to browse websites, search Google and Amazon in just two lines of code.
@@ -18,14 +19,14 @@ The `langchain-scraperapi` package adds three ready-to-use LangChain tools backe
 
 | Package | Serializable | JS support |  Package latest |
 | :--- | :---: | :---: | :---: |
-| [langchain-scraperapi](https://pypi.org/project/langchain-scraperapi/) | ❌ | ❌ |  ![PyPI - Version](https://img.shields.io/pypi/v/langchain-scraperapi?style=flat-square&label=%20) |
+| [`langchain-scraperapi`](https://pypi.org/project/langchain-scraperapi/) | ❌ | ❌ |  ![PyPI - Version](https://img.shields.io/pypi/v/langchain-scraperapi?style=flat-square&label=%20) |
 
 ## Setup
 
 Install the `langchain-scraperapi` package:
 
 ```python
-%pip install -qU langchain-scraperapi
+pip install -qU langchain-scraperapi
 ```
 
 ### Credentials
@@ -96,7 +97,7 @@ html_text = tool.invoke(
 print(html_text[:300], "…")
 ```
 
-### 2. `ScraperAPIGoogleSearchTool` — structured Google Search
+### 2. `ScraperAPIGoogleSearchTool` — structured Google search
 
 Structured SERP data via `/structured/google/search`.
 
@@ -121,7 +122,7 @@ results = google_search.invoke(
 print(results)
 ```
 
-### 3. `ScraperAPIAmazonSearchTool` — structured Amazon Search
+### 3. `ScraperAPIAmazonSearchTool` — structured Amazon search
 
 Structured product results via `/structured/amazon/search`.
 
@@ -151,7 +152,7 @@ print(products)
 Here is an example of using the tools in an AI agent. The `ScraperAPITool` gives the AI the ability to browse any website, summarize articles, and click on links to navigate between pages.
 
 ```python
-%pip install -qU langchain-openai langchain
+pip install -qU langchain-openai langchain
 ```
 
 ```python
@@ -161,16 +162,17 @@ from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
 from langchain_scraperapi.tools import ScraperAPITool
 
+
 os.environ["SCRAPERAPI_API_KEY"] = "your-api-key"
 os.environ["OPENAI_API_KEY"] = "your-api-key"
 
 tools = [ScraperAPITool(output_format="markdown")]
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+model = ChatOpenAI(model="gpt-5.4", temperature=0)
 
 agent = create_agent(
-    model=llm,
+    model=model,
     tools=tools,
-    prompt="You are a helpful assistant that can browse websites for users. When asked to browse a website or a link, do so with the ScraperAPITool, then provide information based on the website based on the user's needs.",
+    system_prompt="You are a helpful assistant that can browse websites for users. When asked to browse a website or a link, do so with the ScraperAPITool, then provide information based on the website based on the user's needs.",
 )
 
 response = agent.invoke(
@@ -178,6 +180,8 @@ response = agent.invoke(
 )
 print(response["messages"][-1].content)
 ```
+
+---
 
 ## API reference
 
@@ -191,6 +195,11 @@ The LangChain wrappers surface these parameters directly.
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/tools/scraperapi.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/tools/scraperapi.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>

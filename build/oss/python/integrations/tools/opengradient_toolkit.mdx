@@ -1,5 +1,6 @@
 ---
-title: OpenGradientToolkit
+title: "OpenGradientToolkit integration"
+description: "Integrate with the OpenGradientToolkit tool using LangChain Python."
 ---
 
 This notebook shows how to build tools using the OpenGradient toolkit. This toolkit gives users the ability to create custom tools based on models and workflows on the [OpenGradient network](https://www.opengradient.ai/).
@@ -24,7 +25,7 @@ If you need to set up a new API key, download the opengradient SDK and follow th
 This toolkit lives in the `langchain-opengradient` package:
 
 ```python
-%pip install -qU langchain-opengradient
+pip install -qU langchain-opengradient
 ```
 
 ## Instantiation
@@ -156,14 +157,15 @@ Here's how to use your OpenGradient tools with a LangChain agent:
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
 
+
 # Initialize LLM
-llm = ChatOpenAI(model="gpt-4o")
+model = ChatOpenAI(model="gpt-5.4")
 
 # Create tools from the toolkit
 tools = toolkit.get_tools()
 
 # Create agent
-agent_executor = create_agent(llm, tools)
+agent_executor = create_agent(model, tools)
 
 # Example query for the agent
 example_query = "What's the current volatility of ETH?"
@@ -197,12 +199,19 @@ Name: eth_volatility
 The current volatility of the ETH/USDT trading pair is 0.038%.
 ```
 
+---
+
 ## API reference
 
-See the [Github page](https://github.com/OpenGradient/og-langchain) for more detail.
+See the [GitHub page](https://github.com/OpenGradient/og-langchain) for more detail.
 
 ---
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit the source of this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/tools/opengradient_toolkit.mdx)
+<div className="source-links">
+<Callout icon="terminal-2">
+    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
 </Callout>
+<Callout icon="edit">
+    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/tools/opengradient_toolkit.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+</Callout>
+</div>
